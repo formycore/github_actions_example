@@ -24,3 +24,16 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+# upto this point maven clean install is completed
+# now we need to create this maven artifact to a docker image
+# this is done by using the docker-maven plugin
+# then push that to docker hub
+   - name: Docker build and push images
+     uses: mr-smithers-excellent/docker-build-push@v5
+     with:
+       image: formycore/github_action_ex
+       tags: v1
+       registory: docker.io
+       dockerfile: Dockerfile
+       username: ${{ secrets.DOCKER_USERNAME }}
+       password: ${{ secrets.DOCKER_PASSWORD }}
